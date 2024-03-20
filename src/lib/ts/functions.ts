@@ -88,11 +88,16 @@ export function transposeBoard(brd: Board, { direction }: Directions) {
 }
 
 export function hasEmptyFields(brd: Board) {
-	brd.forEach((row: number[]) => {
+	let count = 0;
+
+	brd.forEach((row) => {
 		if (row.includes(0)) {
-			return true;
-		} else {
-			return false;
+			count++;
 		}
 	});
+	if (count) {
+		return true;
+	} else {
+		return false;
+	}
 }
