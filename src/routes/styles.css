@@ -1,0 +1,139 @@
+:root {
+	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--column-margin-top: 4rem;
+	font-family: var(--font-body);
+	color: black;
+
+	--color-board: #cdc1b5;
+	--color-board-border: #bbada0;
+	--color-empty: rgb(204, 192, 179);
+	--color-2: rgb(238, 228, 218);
+	--color-4: rgb(237, 224, 200);
+	--color-8: rgb(242, 177, 121);
+	--color-16: rgb(245, 149, 99);
+	--color-32: rgb(246, 124, 95);
+	--color-64: rgb(246, 94, 59);
+	--color-128: rgb(237, 207, 114);
+	--color-256: rgb(237, 204, 97);
+	--color-512: rgb(237, 200, 80);
+	--color-1024: rgb(237, 197, 63);
+	--color-2048: rgb(237, 194, 46);
+	--color-other: BLACK;
+	--color-game-over: rgb(238, 228, 218, 0.73);
+
+	--font-size-low: 40; /* 2, 4, 6, 8, 16, 32, 64 */
+	--font-size-mid: 30; /* 128, 256, 512 */
+	--font-size-high: 20; /* 1024, 2048, 4096 ... */
+
+	--font-color-light: rgb(249, 246, 242);
+	--font-color-dark: rgb(119, 110, 101);
+}
+
+body {
+	min-height: 100vh;
+	background-color: grey;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+}
+
+.main-section {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.board {
+	width: 400px;
+	height: 400px;
+
+	background-color: var(--color-board);
+	border: 6px solid var(--color-board-border);
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tile {
+	width: 90px;
+	height: 90px;
+	border: 5px solid;
+	border-color: var(--color-board-border);
+	font-weight: bold;
+	font-size: 35px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 {
+	font-weight: 900;
+}
+
+p {
+	font-weight: 500;
+}
+
+hr {
+	width: 500px;
+	color: black;
+}
+
+button {
+	margin: 5px;
+	width: 80px;
+	height: 40px;
+	background-color: var(--color-board-border);
+}
+
+/* Tile colors */
+
+.x2 {
+	background-color: var(--color-2);
+	color: var(--font-color-dark);
+}
+.x4 {
+	background-color: var(--color-4);
+	color: var(--font-color-dark);
+}
+.x8 {
+	background-color: var(--color-8);
+	color: var(--font-color-dark);
+}
+.x16 {
+	background-color: var(--color-16);
+	color: var(--font-color-light);
+}
+.x32 {
+	background-color: var(--color-32);
+	color: var(--font-color-light);
+}
+.x64 {
+	background-color: var(--color-64);
+	color: var(--font-color-light);
+}
+.x128 {
+	background-color: var(--color-128);
+	color: var(--font-color-light);
+}
+.x256 {
+	background-color: var(--color-256);
+	color: var(--font-color-light);
+}
+.x512 {
+	background-color: var(--color-512);
+	color: var(--font-color-light);
+}
+.x1024 {
+	background-color: var(--color-1024);
+	color: var(--font-color-light);
+}
+.x2048 {
+	background-color: var(--color-2048);
+	color: var(--font-color-light);
+}
+.x4096 {
+	background-color: var(--color-other);
+	color: var(--font-color-light);
+}
