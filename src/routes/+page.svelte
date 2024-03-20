@@ -3,25 +3,26 @@
 	import wolf from '$lib/images/wolf.png';
 	import type { Board, Directions } from '$lib/ts/types';
 	import { boardSize, zero_board, test_board, starting_board } from '$lib/ts/global_defaults';
-	import { slider, transposeBoard, transposeMatrix } from '$lib/ts/functions';
+	import { createEmptyBoard, slider, transposeBoard } from '$lib/ts/functions';
 
 	export let score = 0;
-	// let board = createEmptyBoard();
-	let board = test_board;
-	// export let board = starting_board;
+	// export let board = createEmptyBoard();
+	// export let board = test_board;
+	export let board = starting_board;
+	export let gameOver: boolean = false;
 
 	// function handleKeyPress(e: KeyboardEvent) {
 	//     if (e.key === "ArrowLeft") {
 	//         handleSlide();
 	//     }
 	// }
-	function matrixTest(board: Board) {
-		return (board = transposeMatrix(board));
-		console.log('It works', board);
-	}
+	// function matrixTest(brd: Board) {
+	// 	board = transposeMatrix(brd);
+	// 	console.log('It works', board);
+	// }
 
 	export function handleSlide({ direction }: Directions) {
-		transposeBoard(board, { direction });
+		board = transposeBoard(board, { direction });
 		console.log('board after transpose 1: ', board);
 		let x = slider(board);
 		console.log('X after slider: ', x);
@@ -46,14 +47,16 @@
 	<div class="board">
 		{#each board as row}
 			{#each row as tile}
-				<div class={'tile x' + tile}>{tile}</div>
+				<div class={'tile x' + tile}>
+					{#if tile > 0}{tile}{/if}
+				</div>
 			{/each}
 		{/each}
 	</div>
 	<img alt="wolf" src={wolf} width="300px" height="300px" />
 </div>
 <br />
-<div><button on:click={() => matrixTest(board)}>TEST</button></div>
+<!-- <div><button on:click={() => matrixTest(board)}>TEST</button></div> -->
 <div>
 	<button on:click={() => handleSlide({ direction: 'Left' })}>LEFT</button>
 	<button on:click={() => handleSlide({ direction: 'Right' })}>RIGHT</button>

@@ -1,12 +1,24 @@
 import type { Board, Directions } from './types';
 import { boardSize } from './global_defaults';
 
-export function slider(board: Board) {
-	const newBoard: Board = [];
+export function createEmptyBoard() {
+	const emptyBrd = [];
+	for (let i = 0; i < boardSize; i++) {
+		const x = [];
+		for (let j = 0; j < boardSize; j++) {
+			x.push(0);
+		}
+		emptyBrd.push(x);
+	}
+	return emptyBrd;
+}
+
+export function slider(brd: Board) {
+	const newBrd: Board = [];
 	let score: number = 0;
 
 	for (let rowIndex = 0; rowIndex < boardSize; rowIndex++) {
-		let row: number[] = board[rowIndex];
+		let row: number[] = brd[rowIndex];
 
 		row = row.filter((elm) => elm !== 0);
 
@@ -24,74 +36,63 @@ export function slider(board: Board) {
 			row.push(0);
 		}
 
-		newBoard.push(row);
+		newBrd.push(row);
 	}
 
-	return { board: newBoard, score: score };
+	return { board: newBrd, score: score };
 }
 
-export function transposeMatrix(board: Board) {
+export function transposeIfUp(brd: Board) {
 	const newMatrix: Board = [];
 	for (let i = 0; i < boardSize; i++) {
 		const x = [];
 		for (let j = 0; j < boardSize; j++) {
-			x.push(board[j][i]);
+			x.push(brd[j][i]);
 		}
 		newMatrix.push(x);
 	}
 	return newMatrix;
 }
 
-// function transposeMatrixReverse(board: Board) {
-// 	const newMatrix: Board = [];
-// 	for (let i = 0; i < 4; i++) {
-// 		const x = [];
-// 		for (let row = 0; row < 4; row++) {
-// 			x.push(board[row][i]);
-// 		}
-// 		newMatrix.push(x);
-// 	}
-// 	return newMatrix;
-// }
+export function transposeIfDown(brd: Board) {
+	const newMatrix: Board = [];
+	for (let i = 0; i < boardSize; i++) {
+		const x = [];
+		for (let j = 0; j < boardSize; j++) {
+			x.push(brd[boardSize - 1 - j][i]);
+		}
+		newMatrix.push(x);
+	}
+	return newMatrix;
+}
 
-export function transposeBoard(board: Board, { direction }: Directions) {
-	let newBoard: Board = [];
+export function transposeBoard(brd: Board, { direction }: Directions) {
+	let newBrd: Board = [];
 
 	switch (direction) {
 		case 'Left':
-			return (newBoard = board);
+			return (newBrd = brd);
 		case 'Right':
-			board.forEach((elm) => elm.reverse());
-			newBoard = board;
-			return newBoard;
+			brd.forEach((elm) => elm.reverse());
+			newBrd = brd;
+			return newBrd;
 		case 'Up':
-			newBoard = transposeMatrix(board);
-			return newBoard;
+			newBrd = transposeIfUp(brd);
+			return newBrd;
 		case 'Down':
-			board = transposeMatrix(board);
-			board.forEach((elm) => elm.reverse());
-			newBoard = board;
-			return newBoard;
+			brd.forEach((elm) => elm.reverse());
+			brd = transposeIfDown(brd);
+			newBrd = brd;
+			return newBrd;
 	}
 }
 
-// export function transposeBoardReverse(board: Board, { direction }: Directions) {
-// 	let newBoard: Board = [];
-
-// 	switch (direction) {
-// 		case 'Left':
-// 			return (newBoard = board);
-// 		case 'Right':
-// 			board.forEach((elm) => elm.reverse());
-// 			newBoard = board;
-// 			return newBoard;
-// 		case 'Up':
-// 			newBoard = transposeMatrixReverse(board);
-// 			return newBoard;
-// 		case 'Down':
-// 			board = transposeMatrixReverse(board);
-// 			board.forEach((elm) => elm.reverse());
-// 			newBoard = board;
-// 			return newBoard;
-// 	}
-// }
+export function hasEmptyFields(brd: Board) {
+	brd.forEach((row: number[]) => {
+		if (row.includes(0)) {
+			return true;
+		} else {
+			return false;
+		}
+	});
+}
