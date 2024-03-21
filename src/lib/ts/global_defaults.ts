@@ -3,8 +3,8 @@ export const boardSize = 4;
 export const zero_board = [
 	[0, 0, 0, 0],
 	[0, 0, 0, 0],
-	[0, 0, 0, 0],
-	[0, 0, 0, 0]
+	[0, 0, 0, 2],
+	[0, 0, 8, 4]
 ];
 
 export const starting_board = [
