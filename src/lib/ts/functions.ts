@@ -54,30 +54,6 @@ export function transposeMatrix(matrix: Board) {
 	return newMatrix;
 }
 
-// export function transposeIfUp(brd: Board) {
-// 	const newMatrix: Board = [];
-// 	for (let i = 0; i < boardSize; i++) {
-// 		const x = [];
-// 		for (let j = 0; j < boardSize; j++) {
-// 			x.push(brd[j][i]);
-// 		}
-// 		newMatrix.push(x);
-// 	}
-// 	return newMatrix;
-// }
-
-// export function transposeIfDown(brd: Board) {
-// 	const newMatrix: Board = [];
-// 	for (let i = 0; i < boardSize; i++) {
-// 		const x = [];
-// 		for (let j = 0; j < boardSize; j++) {
-// 			x.push(brd[boardSize - 1 - j][i]);
-// 		}
-// 		newMatrix.push(x);
-// 	}
-// 	return newMatrix;
-// }
-
 function reverseNestedArrays(array: number[][]) {
 	array.forEach((elm) => elm.reverse());
 	return array;
@@ -123,23 +99,19 @@ export function transposeBoardBack(brd: Board, { direction }: Directions) {
 export function hasEmptyFields(brd: Board) {
 	let count = 0;
 
-	brd.forEach((row) => {
-		if (row.includes(0)) {
-			count++;
-		}
-	});
-	if (count) {
+	while (count === 0) {
+		brd.forEach((row) => {
+			if (row.includes(0)) {
+				count++;
+			}
+		});
+	}
+	if (count > 0) {
 		return true;
 	} else {
 		return false;
 	}
 }
-
-// export function boardTest(board: Board, { direction }: Directions) {
-// 	let brd1: Board = transposeBoard(board, { direction });
-// 	const afterSlide = slider(brd1);
-// 	return (brd1 = transposeBoard(afterSlide.brd, { direction }));
-// }
 
 export function compareTwoArrays(a: Board, b: Board) {
 	if (a.length !== b.length) {
@@ -160,16 +132,37 @@ export function compareTwoArrays(a: Board, b: Board) {
 }
 
 export function movementIsPossible(brd: Board, { direction }: Directions) {
-	let tempBrd: Board = [...brd];
+	let tempBrd: Board = [];
+	brd.map((elm) => tempBrd.push([...elm]));
 	tempBrd = transposeBoard(tempBrd, { direction });
-	console.log('temporary board in function: ', tempBrd);
-	console.log('original game board: ', brd);
+	// console.log('temporary board in function: ', tempBrd);
+	// console.log('original game board after: ', brd);
 	for (let i = 0; i < boardSize; i++) {
 		for (let j = 0; j < boardSize - 1; j++) {
-			if (brd[i][j] === 0 && tempBrd[i][j + 1] !== 0) {
+			if (
+				(tempBrd[i][j] !== 0 && tempBrd[i][j] === tempBrd[i][j + 1]) ||
+				(tempBrd[i][j] === 0 && tempBrd[i][j + 1] !== 0)
+			) {
+				// tempBrd = [];
 				return true;
 			}
 		}
+	}
+	return false;
+}
+
+export function movementIsPossibleInAnyDirection(brd: Board) {
+	if (movementIsPossible(brd, { direction: 'Left' })) {
+		return true;
+	}
+	if (movementIsPossible(brd, { direction: 'Right' })) {
+		return true;
+	}
+	if (movementIsPossible(brd, { direction: 'Up' })) {
+		return true;
+	}
+	if (movementIsPossible(brd, { direction: 'Down' })) {
+		return true;
 	}
 	return false;
 }

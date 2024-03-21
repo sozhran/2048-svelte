@@ -9,8 +9,8 @@
 		transposeBoard,
 		transposeBoardBack,
 		hasEmptyFields,
-		compareTwoArrays,
-		movementIsPossible
+		movementIsPossible,
+		movementIsPossibleInAnyDirection
 	} from '$lib/ts/functions';
 
 	export let score: number;
@@ -22,8 +22,8 @@
 		score = 0;
 		// board = createEmptyBoard();
 		// board = test_board;
-		board = zero_board;
-		// board = starting_board;
+		// board = zero_board;
+		board = starting_board;
 		gameOver = false;
 		gameTurn = 0;
 		// addNewSquare();
@@ -35,16 +35,16 @@
 	function handleKeyPress(e: KeyboardEvent) {
 		switch (e.key) {
 			case 'ArrowLeft':
-				handleSlide({ direction: 'Left' });
+				handleGameTurn({ direction: 'Left' });
 				break;
 			case 'ArrowRight':
-				handleSlide({ direction: 'Right' });
+				handleGameTurn({ direction: 'Right' });
 				break;
 			case 'ArrowUp':
-				handleSlide({ direction: 'Up' });
+				handleGameTurn({ direction: 'Up' });
 				break;
 			case 'ArrowDown':
-				handleSlide({ direction: 'Down' });
+				handleGameTurn({ direction: 'Down' });
 				break;
 		}
 	}
@@ -66,44 +66,32 @@
 		}
 	}
 
-	export function handleSlide({ direction }: Directions) {
-		// if (!hasEmptyFields) {
-		// 	gameOverCheck();
-		// }
-
-		if (gameOver || !movementIsPossible(board, { direction: direction })) {
-			return;
-		}
+	export function handleGameTurn({ direction }: Directions) {
+		if (gameOver || !movementIsPossible(board, { direction: direction })) return;
 
 		let brd1: Board = transposeBoard(board, { direction });
 		let afterSlide = slider(brd1);
 		brd1 = transposeBoardBack(afterSlide.brd, { direction });
-		// if (compareTwoArrays(brd1, board)) {
-		// 	return;
-		// } else {
 		board = brd1;
 		score += afterSlide.score;
 		addNewSquare();
+		// if (!hasEmptyFields(board)) {
+		// 	if (!movementIsPossibleInAnyDirection(board)) {
+		// 		gameOver = true;
+		// 		return;
+		// 	} else return;
 		// }
 	}
 
 	export function checkMovement({ direction }: Directions) {
 		console.log(movementIsPossible(board, { direction: direction }));
 	}
-	// export function gameOverCheck() {
-	// 	let testBoard: Board = board;
-	// 	testBoard = boardTest(testBoard, { direction: 'Left' });
-	// 	testBoard = boardTest(testBoard, { direction: 'Right' });
-	// 	testBoard = boardTest(testBoard, { direction: 'Up' });
-	// 	testBoard = boardTest(testBoard, { direction: 'Down' });
 
-	// 	if (testBoard === board) {
-	// 		gameOver = true;
-	// 		return true;
-	// 	}
-
-	// 	return false;
-	// }
+	export function toggleGameOver() {
+		gameOver = !gameOver;
+		console.log(gameOver);
+	}
+	// add function gameOverCheck()
 </script>
 
 <svelte:head>
@@ -114,7 +102,6 @@
 <h1>2048</h1>
 <hr />
 <p>Score: {score}</p>
-{#if gameOver}<p>GAME OVER MAN</p>{/if}
 
 <div class="main-section">
 	<img alt="unicorn" src={unicorn} width="300px" height="300px" />
@@ -133,16 +120,19 @@
 <br />
 
 <div>
-	<button on:click={() => handleSlide({ direction: 'Left' })}>LEFT</button>
-	<button on:click={() => handleSlide({ direction: 'Right' })}>RIGHT</button>
-	<button on:click={() => handleSlide({ direction: 'Up' })}>UP</button>
-	<button on:click={() => handleSlide({ direction: 'Down' })}>DOWN</button>
+	<button on:click={() => handleGameTurn({ direction: 'Left' })}>LEFT</button>
+	<button on:click={() => handleGameTurn({ direction: 'Right' })}>RIGHT</button>
+	<button on:click={() => handleGameTurn({ direction: 'Up' })}>UP</button>
+	<button on:click={() => handleGameTurn({ direction: 'Down' })}>DOWN</button>
 </div>
 <div>
 	<button on:click={() => checkMovement({ direction: 'Left' })}>ChkMov LEFT</button>
 	<button on:click={() => checkMovement({ direction: 'Right' })}>ChkMov RIGHT</button>
 	<button on:click={() => checkMovement({ direction: 'Up' })}>ChkMov UP</button>
 	<button on:click={() => checkMovement({ direction: 'Down' })}>ChkMov DOWN</button>
+	<button on:click={() => console.log(board)}>Board</button>
+	<button on:click={() => toggleGameOver()}>gameOver</button>
 </div>
+{#if gameOver}<p>GAME OVER MAN</p>{/if}
 
 <svelte:window on:keyup|preventDefault={handleKeyPress} />
