@@ -1,5 +1,5 @@
 <script>
-	// import './reset.css';
+	import './reset.css';
 	import './styles.css';
 </script>
 
@@ -9,7 +9,16 @@
 	</main>
 
 	<footer>
-		<p>made by <a href="https://github.com/sozhran">Artem</a>.</p>
+		<p>
+			<a href="https://github.com/sozhran/2048" target="_blank"
+				><img
+					alt="github share icon"
+					src="https://i.imgur.com/FyuvoYD.png"
+					width="30"
+					height="30"
+				/></a
+			>
+		</p>
 	</footer>
 </div>
 
@@ -33,7 +42,8 @@
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
-			padding: 12px 0;
+			margin: 10px;
+			opacity: 60%;
 		}
 	}
 </style>

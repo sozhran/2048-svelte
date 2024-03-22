@@ -1,25 +1,14 @@
 :root {
-	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	/* --font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
 	--column-margin-top: 4rem;
-	font-family: var(--font-body);
+	font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
 	color: black;
 
 	--color-board: #cdc1b5;
 	--color-board-border: #bbada0;
 	--color-empty: rgb(204, 192, 179);
-	--color-2: rgb(238, 228, 218);
-	--color-4: rgb(237, 224, 200);
-	--color-8: rgb(242, 177, 121);
-	--color-16: rgb(245, 149, 99);
-	--color-32: rgb(246, 124, 95);
-	--color-64: rgb(246, 94, 59);
-	--color-128: rgb(237, 207, 114);
-	--color-256: rgb(237, 204, 97);
-	--color-512: rgb(237, 200, 80);
-	--color-1024: rgb(237, 197, 63);
-	--color-2048: rgb(237, 194, 46);
-	--color-other: BLACK;
+
 	--color-game-over: rgb(238, 228, 218, 0.73);
 
 	--font-size-low: 40; /* 2, 4, 6, 8, 16, 32, 64 */
@@ -30,12 +19,28 @@
 	--font-color-dark: rgb(119, 110, 101);
 }
 
+.red {
+	color: red;
+}
+
 body {
 	min-height: 100vh;
-	background-color: grey;
+	background-color: #979a94;
 	display: flex;
 	justify-content: center;
 	text-align: center;
+}
+
+.top-section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 30px;
+	font-size: 20px;
+	color: black;
+	opacity: 60%;
 }
 
 .main-section {
@@ -45,19 +50,30 @@ body {
 	align-items: center;
 }
 
-.board {
-	width: 400px;
-	height: 400px;
+.game-over {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
 
-	background-color: var(--color-board);
-	border: 6px solid var(--color-board-border);
+.board {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
+	width: 410px;
+	height: 410px;
+	min-width: 410px;
+	min-height: 410px;
+	background-color: var(--color-board);
+	border: 5px solid;
+	border-color: var(--color-board-border);
 }
 
 .tile {
-	width: 90px;
-	height: 90px;
+	width: 100px;
+	height: 100px;
 	border: 5px solid;
 	border-color: var(--color-board-border);
 	font-weight: bold;
@@ -65,9 +81,11 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow: visible;
 }
 
 h1 {
+	font-size: 45px;
 	font-weight: 900;
 }
 
@@ -77,63 +95,98 @@ p {
 
 hr {
 	width: 500px;
-	color: black;
+	/* border-color: #645d52; */
+	border-color: black;
+	border-style: solid;
+	opacity: 60%;
 }
 
 button {
 	margin: 5px;
-	width: 80px;
-	height: 40px;
+	width: 120px;
+	height: 45px;
 	background-color: var(--color-board-border);
+}
+
+.newtile {
+	/* text-decoration: underline; */
+	animation: pop 0.5s;
 }
 
 /* Tile colors */
 
 .x2 {
-	background-color: var(--color-2);
+	background-color: rgb(238, 228, 218);
 	color: var(--font-color-dark);
 }
 .x4 {
-	background-color: var(--color-4);
+	background-color: rgb(237, 224, 200);
 	color: var(--font-color-dark);
 }
 .x8 {
-	background-color: var(--color-8);
+	background-color: rgb(242, 177, 121);
 	color: var(--font-color-dark);
 }
 .x16 {
-	background-color: var(--color-16);
+	background-color: rgb(245, 149, 99);
 	color: var(--font-color-light);
 }
 .x32 {
-	background-color: var(--color-32);
+	background-color: rgb(246, 124, 95);
 	color: var(--font-color-light);
 }
 .x64 {
-	background-color: var(--color-64);
+	background-color: rgb(246, 94, 59);
 	color: var(--font-color-light);
 }
 .x128 {
-	background-color: var(--color-128);
+	background-color: rgb(237, 207, 114);
 	color: var(--font-color-light);
 }
 .x256 {
-	background-color: var(--color-256);
+	background-color: rgb(237, 204, 97);
 	color: var(--font-color-light);
 }
 .x512 {
-	background-color: var(--color-512);
+	background-color: rgb(237, 200, 80);
 	color: var(--font-color-light);
 }
 .x1024 {
-	background-color: var(--color-1024);
+	background-color: rgb(237, 197, 63);
 	color: var(--font-color-light);
 }
 .x2048 {
-	background-color: var(--color-2048);
+	background-color: rgb(237, 194, 46);
 	color: var(--font-color-light);
 }
 .x4096 {
 	background-color: var(--color-other);
 	color: var(--font-color-light);
+}
+
+@keyframes pop {
+	0% {
+		opacity: 0;
+		transform: scale(0.1);
+	}
+
+	50% {
+		opacity: 0.5;
+		transform: scale(1.2);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }

@@ -157,3 +157,11 @@ export function movementIsPossibleInAnyDirection(brd: Board) {
 	}
 	return false;
 }
+
+export function tileChecker(array: [number, number][], a: number, b: number) {
+	for (let i = 0; i < array.length; i++) {
+		if (array[i][0] === a && array[i][1] === b) return true;
+		break;
+	}
+	return false;
+}
