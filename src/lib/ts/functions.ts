@@ -99,13 +99,11 @@ export function transposeBoardBack(brd: Board, { direction }: Directions) {
 export function hasEmptyFields(brd: Board) {
 	let count = 0;
 
-	while (count === 0) {
-		brd.forEach((row) => {
-			if (row.includes(0)) {
-				count++;
-			}
-		});
-	}
+	brd.forEach((row) => {
+		if (row.includes(0)) {
+			count++;
+		}
+	});
 	if (count > 0) {
 		return true;
 	} else {
@@ -135,15 +133,12 @@ export function movementIsPossible(brd: Board, { direction }: Directions) {
 	let tempBrd: Board = [];
 	brd.map((elm) => tempBrd.push([...elm]));
 	tempBrd = transposeBoard(tempBrd, { direction });
-	// console.log('temporary board in function: ', tempBrd);
-	// console.log('original game board after: ', brd);
 	for (let i = 0; i < boardSize; i++) {
 		for (let j = 0; j < boardSize - 1; j++) {
 			if (
 				(tempBrd[i][j] !== 0 && tempBrd[i][j] === tempBrd[i][j + 1]) ||
 				(tempBrd[i][j] === 0 && tempBrd[i][j + 1] !== 0)
 			) {
-				// tempBrd = [];
 				return true;
 			}
 		}
@@ -152,16 +147,12 @@ export function movementIsPossible(brd: Board, { direction }: Directions) {
 }
 
 export function movementIsPossibleInAnyDirection(brd: Board) {
-	if (movementIsPossible(brd, { direction: 'Left' })) {
-		return true;
-	}
-	if (movementIsPossible(brd, { direction: 'Right' })) {
-		return true;
-	}
-	if (movementIsPossible(brd, { direction: 'Up' })) {
-		return true;
-	}
-	if (movementIsPossible(brd, { direction: 'Down' })) {
+	if (
+		movementIsPossible(brd, { direction: 'Left' }) ||
+		movementIsPossible(brd, { direction: 'Right' }) ||
+		movementIsPossible(brd, { direction: 'Up' }) ||
+		movementIsPossible(brd, { direction: 'Down' })
+	) {
 		return true;
 	}
 	return false;

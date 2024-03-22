@@ -2,7 +2,7 @@
 	import unicorn from '$lib/images/unicorn.png';
 	import wolf from '$lib/images/wolf.png';
 	import type { Board, Directions } from '$lib/ts/types';
-	import { boardSize, zero_board, test_board, starting_board } from '$lib/ts/global_defaults';
+	import { boardSize } from '$lib/ts/global_defaults';
 	import {
 		createEmptyBoard,
 		slider,
@@ -13,21 +13,16 @@
 		movementIsPossibleInAnyDirection
 	} from '$lib/ts/functions';
 
-	export let score: number;
-	export let board: Board;
-	export let gameOver: boolean;
-	export let gameTurn: number;
+	let score: number;
+	let board: Board;
+	let gameOver: boolean;
 
 	function resetGame() {
 		score = 0;
-		// board = createEmptyBoard();
-		// board = test_board;
-		// board = zero_board;
-		board = starting_board;
+		board = createEmptyBoard();
 		gameOver = false;
-		gameTurn = 0;
-		// addNewSquare();
-		// addNewSquare();
+		addNewSquare();
+		addNewSquare();
 	}
 
 	resetGame();
@@ -49,7 +44,7 @@
 		}
 	}
 
-	export function addNewSquare() {
+	function addNewSquare() {
 		if (!hasEmptyFields(board)) {
 			return;
 		}
@@ -66,7 +61,7 @@
 		}
 	}
 
-	export function handleGameTurn({ direction }: Directions) {
+	function handleGameTurn({ direction }: Directions) {
 		if (gameOver || !movementIsPossible(board, { direction: direction })) return;
 
 		let brd1: Board = transposeBoard(board, { direction });
@@ -75,23 +70,19 @@
 		board = brd1;
 		score += afterSlide.score;
 		addNewSquare();
-		// if (!hasEmptyFields(board)) {
-		// 	if (!movementIsPossibleInAnyDirection(board)) {
-		// 		gameOver = true;
-		// 		return;
-		// 	} else return;
-		// }
+		if (!hasEmptyFields(board)) {
+			gameOverCheck();
+			return;
+		}
 	}
 
-	export function checkMovement({ direction }: Directions) {
-		console.log(movementIsPossible(board, { direction: direction }));
+	function gameOverCheck() {
+		if (movementIsPossibleInAnyDirection(board)) {
+			gameOver = false;
+		} else {
+			gameOver = true;
+		}
 	}
-
-	export function toggleGameOver() {
-		gameOver = !gameOver;
-		console.log(gameOver);
-	}
-	// add function gameOverCheck()
 </script>
 
 <svelte:head>
@@ -125,14 +116,7 @@
 	<button on:click={() => handleGameTurn({ direction: 'Up' })}>UP</button>
 	<button on:click={() => handleGameTurn({ direction: 'Down' })}>DOWN</button>
 </div>
-<div>
-	<button on:click={() => checkMovement({ direction: 'Left' })}>ChkMov LEFT</button>
-	<button on:click={() => checkMovement({ direction: 'Right' })}>ChkMov RIGHT</button>
-	<button on:click={() => checkMovement({ direction: 'Up' })}>ChkMov UP</button>
-	<button on:click={() => checkMovement({ direction: 'Down' })}>ChkMov DOWN</button>
-	<button on:click={() => console.log(board)}>Board</button>
-	<button on:click={() => toggleGameOver()}>gameOver</button>
-</div>
-{#if gameOver}<p>GAME OVER MAN</p>{/if}
+{#if gameOver}<p>GAME OVER MAN</p>
+	<button on:click={resetGame}>RESET</button>{/if}
 
 <svelte:window on:keyup|preventDefault={handleKeyPress} />
