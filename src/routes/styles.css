@@ -6,14 +6,14 @@
 	color: black;
 
 	--color-board: #cdc1b5;
-	--color-board-border: #bbada0;
+	--color-board-border: #2f2117;
 	--color-empty: rgb(204, 192, 179);
 
 	--color-game-over: rgb(238, 228, 218, 0.73);
 
-	--font-size-low: 40; /* 2, 4, 6, 8, 16, 32, 64 */
-	--font-size-mid: 30; /* 128, 256, 512 */
-	--font-size-high: 20; /* 1024, 2048, 4096 ... */
+	--font-size-low: 40;
+	--font-size-mid: 30;
+	--font-size-high: 20;
 
 	--font-color-light: rgb(249, 246, 242);
 	--font-color-dark: rgb(119, 110, 101);
@@ -25,7 +25,11 @@
 
 body {
 	min-height: 100vh;
-	background-color: #979a94;
+	/* background-color: #8a877d; */
+	background-image: url('https://i.imgur.com/DCPP7TW.jpg');
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
 	display: flex;
 	justify-content: center;
 	text-align: center;
@@ -39,7 +43,7 @@ body {
 	gap: 10px;
 	margin-bottom: 30px;
 	font-size: 20px;
-	color: black;
+	color: var(--font-color-light);
 	opacity: 60%;
 }
 
@@ -48,6 +52,8 @@ body {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	/* delete the line below */
+	margin: auto;
 }
 
 .game-over {
@@ -62,26 +68,27 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	width: 410px;
-	height: 410px;
-	min-width: 410px;
-	min-height: 410px;
+	width: 420px;
+	height: 420px;
+	min-width: 420px;
+	min-height: 420px;
 	background-color: var(--color-board);
-	border: 5px solid;
+	border: 10px solid;
 	border-color: var(--color-board-border);
+	border-radius: 10px;
 }
 
 .tile {
 	width: 100px;
 	height: 100px;
-	border: 5px solid;
+	border: 6px solid;
 	border-color: var(--color-board-border);
 	font-weight: bold;
 	font-size: 35px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	overflow: visible;
+	/* border-radius: 5px; */
 }
 
 h1 {
@@ -96,7 +103,7 @@ p {
 hr {
 	width: 500px;
 	/* border-color: #645d52; */
-	border-color: black;
+	border-color: var(--font-color-light);
 	border-style: solid;
 	opacity: 60%;
 }
@@ -108,80 +115,29 @@ button {
 	background-color: var(--color-board-border);
 }
 
-/* Tile colors */
-
-.x2 {
-	background-color: rgb(238, 228, 218);
-	color: var(--font-color-dark);
-}
-.x4 {
-	background-color: rgb(237, 224, 200);
-	color: var(--font-color-dark);
-}
-.x8 {
-	background-color: rgb(242, 177, 121);
-	color: var(--font-color-dark);
-}
-.x16 {
-	background-color: rgb(245, 149, 99);
-	color: var(--font-color-light);
-}
-.x32 {
-	background-color: rgb(246, 124, 95);
-	color: var(--font-color-light);
-}
-.x64 {
-	background-color: rgb(246, 94, 59);
-	color: var(--font-color-light);
-}
-.x128 {
-	background-color: rgb(237, 207, 114);
-	color: var(--font-color-light);
-}
-.x256 {
-	background-color: rgb(237, 204, 97);
-	color: var(--font-color-light);
-}
-.x512 {
-	background-color: rgb(237, 200, 80);
-	color: var(--font-color-light);
-}
-.x1024 {
-	background-color: rgb(237, 197, 63);
-	color: var(--font-color-light);
-}
-.x2048 {
-	background-color: rgb(237, 194, 46);
-	color: var(--font-color-light);
-}
-.x4096 {
-	background-color: var(--color-other);
-	color: var(--font-color-light);
-}
-
 .newtile {
 	/* text-decoration: underline; */
-	animation: pop 0.35s;
-	/* animation: fade-in 0.5s; */
+	/* animation: pop 0.3s; */
+	animation: fade-in 0.4s;
 }
 
 @keyframes pop {
 	0% {
 		opacity: 0;
 		transform: scale(0.1);
-		border: 1px solid rgba(187, 173, 160, 0);
+		border: 6px solid rgba(47, 33, 23, 0);
 	}
 
 	80% {
 		opacity: 0.8;
-		transform: scale(1.05);
-		border: 1px solid rgba(187, 173, 160, 0);
+		transform: scale(1.2);
+		border: 6px solid rgba(47, 33, 23, 0);
 	}
 
 	100% {
 		opacity: 1;
 		transform: scale(1);
-		border: 1px solid rgba(187, 173, 160, 1);
+		border: 6px solid rgba(47, 33, 23, 1);
 	}
 }
 
@@ -189,12 +145,72 @@ button {
 	0% {
 		opacity: 0;
 		transform: scale(0);
-		border-color: rgba(187, 173, 160, 0);
+		border-color: rgba(47, 33, 23, 0);
 	}
 
 	100% {
 		opacity: 1;
 		transform: scale(1);
-		border-color: rgba(187, 173, 160, 1);
+		border-color: rgba(47, 33, 23, 1);
 	}
+}
+
+/* EXPENDABLE BELOW */
+
+/* .square {
+	width: 50px;
+	height: 50px;
+	gap: 0px;
+	border: 1px solid black;
+} */
+
+/* Tile colors */
+
+.x2 {
+	background-color: #b99047;
+	color: var(--font-color-light);
+}
+.x4 {
+	background-color: #9d5c0b;
+	color: var(--font-color-light);
+}
+.x8 {
+	background-color: #f0ad28;
+	color: var(--font-color-light);
+}
+.x16 {
+	background-color: #be4309;
+	color: var(--font-color-light);
+}
+.x32 {
+	background-color: #a00a17;
+	color: var(--font-color-light);
+}
+.x64 {
+	background-color: #590e39;
+	color: var(--font-color-light);
+}
+.x128 {
+	background-color: #420044;
+	color: var(--font-color-light);
+}
+.x256 {
+	background-color: #285a16;
+	color: var(--font-color-light);
+}
+.x512 {
+	background-color: #1a380f;
+	color: var(--font-color-light);
+}
+.x1024 {
+	background-color: #082c16;
+	color: var(--font-color-light);
+}
+.x2048 {
+	background-color: #0a3665;
+	color: var(--font-color-light);
+}
+.x4096 {
+	background-color: #011938;
+	color: var(--font-color-light);
 }

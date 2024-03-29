@@ -60,7 +60,12 @@
 			let x = Math.floor(Math.random() * boardSize);
 			let y = Math.floor(Math.random() * boardSize);
 			if (board[x][y] === 0) {
-				board[x][y] = 2;
+				let chance = Math.random();
+				if (chance < 0.1) {
+					board[x][y] = 4;
+				} else {
+					board[x][y] = 2;
+				}
 				newTiles.push([x, y]);
 				success = true;
 			}
@@ -76,7 +81,7 @@
 		let brd1: Board = transposeBoard(board, { direction });
 		let afterSlide = slider(brd1);
 		brd1 = transposeBoardBack(afterSlide.brd, { direction });
-		board = brd1;
+		board = [...brd1];
 		score += afterSlide.score;
 		addNewSquare();
 		if (!hasEmptyFields(board)) {
