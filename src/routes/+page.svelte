@@ -18,14 +18,12 @@
 	let board: Board;
 	let gameOver: boolean;
 	let newTiles: [number, number][];
-	// let mergedTiles: [number, number][];
 
 	function resetGame() {
 		score = 0;
 		board = createEmptyBoard();
 		gameOver = false;
 		newTiles = [];
-		// mergedTiles = [];
 		addNewSquare();
 		addNewSquare();
 	}
@@ -35,15 +33,19 @@
 	function handleKeyPress(e: KeyboardEvent) {
 		switch (e.key) {
 			case 'ArrowLeft':
+			case 'a':
 				handleGameTurn({ direction: 'Left' });
 				break;
 			case 'ArrowRight':
+			case 'd':
 				handleGameTurn({ direction: 'Right' });
 				break;
 			case 'ArrowUp':
+			case 'w':
 				handleGameTurn({ direction: 'Up' });
 				break;
 			case 'ArrowDown':
+			case 's':
 				handleGameTurn({ direction: 'Down' });
 				break;
 		}
@@ -67,6 +69,7 @@
 					board[x][y] = 2;
 				}
 				newTiles.push([x, y]);
+				console.log('newTiles: ', newTiles);
 				success = true;
 			}
 		}
@@ -76,7 +79,6 @@
 		if (gameOver || !movementIsPossible(board, { direction: direction })) return;
 
 		newTiles = [];
-		// mergedTiles = [];
 
 		let brd1: Board = transposeBoard(board, { direction });
 		let afterSlide = slider(brd1);
