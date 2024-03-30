@@ -34,18 +34,22 @@
 		switch (e.key) {
 			case 'ArrowLeft':
 			case 'a':
+			case 'A':
 				handleGameTurn({ direction: 'Left' });
 				break;
 			case 'ArrowRight':
 			case 'd':
+			case 'D':
 				handleGameTurn({ direction: 'Right' });
 				break;
 			case 'ArrowUp':
 			case 'w':
+			case 'W':
 				handleGameTurn({ direction: 'Up' });
 				break;
 			case 'ArrowDown':
 			case 's':
+			case 'S':
 				handleGameTurn({ direction: 'Down' });
 				break;
 		}
@@ -69,7 +73,6 @@
 					board[x][y] = 2;
 				}
 				newTiles.push([x, y]);
-				console.log('newTiles: ', newTiles);
 				success = true;
 			}
 		}
@@ -99,6 +102,12 @@
 			gameOver = true;
 		}
 	}
+
+	// for testing visuals:
+
+	// function toggleGameOver() {
+	// 	return (gameOver = !gameOver);
+	// }
 </script>
 
 <svelte:head>
@@ -107,37 +116,46 @@
 </svelte:head>
 
 <section class="top-section">
+	<h1>2048</h1>
+	<!-- <button on:click={toggleGameOver}>G.O.</button> -->
 	{#if gameOver === true}
 		<h1 class="red">GAME OVER</h1>
 	{:else}
-		<h1>2048</h1>
+		<h1 class="red" style="visibility:hidden">GAME OVER</h1>
 	{/if}
-	<hr />
+	<!-- <hr /> -->
 	<p>Score: {score}</p>
 </section>
 
 <div class="main-section">
-	<img alt="unicorn" src={unicorn} width="300px" height="300px" />
-
-	<div class="board">
-		{#each board as row, rowIndex}
-			{#each row as tile, tileIndex}
-				<div
-					class={tileChecker(newTiles, rowIndex, tileIndex)
-						? 'tile x' + tile + ' newtile'
-						: 'tile x' + tile}
-				>
-					{#if tile > 0}{tile}{/if}
-				</div>
+	<div class="board-section">
+		<img alt="unicorn" src={unicorn} width="300px" height="300px" />
+		<div class="board">
+			{#each board as row, rowIndex}
+				{#each row as tile, tileIndex}
+					<div
+						class={tile > 4096
+							? tileChecker(newTiles, rowIndex, tileIndex)
+								? 'tile x4096' + ' newtile'
+								: 'tile x4096'
+							: tileChecker(newTiles, rowIndex, tileIndex)
+								? 'tile x' + tile + ' newtile'
+								: 'tile x' + tile}
+					>
+						{#if tile > 0}{tile}{/if}
+					</div>
+				{/each}
 			{/each}
-		{/each}
+		</div>
+		<img alt="wolf" src={wolf} width="300px" height="300px" />
 	</div>
-	<img alt="wolf" src={wolf} width="300px" height="300px" />
-</div>
-{#if gameOver}
 	<div class="game-over">
-		<button on:click={resetGame}>Play again</button>
+		{#if gameOver}
+			<button on:click={resetGame}>Play again</button>
+		{:else}
+			<button on:click={resetGame} disabled>Play again</button>
+		{/if}
 	</div>
-{/if}
+</div>
 
 <svelte:window on:keyup|preventDefault={handleKeyPress} />

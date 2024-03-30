@@ -9,39 +9,25 @@
 	</main>
 
 	<footer>
-		<p>
-			<a href="https://github.com/sozhran/2048" target="_blank"
-				><img
-					alt="github share icon"
-					src="https://i.imgur.com/FyuvoYD.png"
-					width="30"
-					height="30"
-				/></a
-			>
-		</p>
+		<a href="https://github.com/sozhran/2048" target="_blank">
+			<img alt="github share icon" src="https://i.imgur.com/5Qr1cEC.png" width="30" height="30" />
+		</a>
 	</footer>
 </div>
 
 <style>
-	.app {
+	app {
 		display: flex;
 		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
 	}
 
 	@media (min-width: 480px) {
 		footer {
 			display: flex;
+			align-self: flex-end;
 			flex-direction: row;
 			justify-content: center;
-			align-items: center;
+			align-items: bottom;
 			margin: 10px;
 			opacity: 60%;
 		}
