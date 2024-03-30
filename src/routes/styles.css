@@ -15,11 +15,10 @@
 	--font-color-dark: rgb(119, 110, 101);
 }
 
-.red {
-	color: red;
-}
-
 body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	min-height: 100vh;
 	background-image: url('https://i.imgur.com/DCPP7TW.jpg');
 	background-position: center;
@@ -40,7 +39,7 @@ body {
 	font-size: 20px;
 	background-color: black;
 	opacity: 50%;
-	margin-bottom: 40px;
+	margin-bottom: 60px;
 }
 
 .main-section {
@@ -63,8 +62,8 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .board {
@@ -124,6 +123,26 @@ button:disabled {
 	/* text-decoration: underline; */
 	/* animation: pop 0.3s; */
 	animation: fade-in 0.4s;
+}
+
+.footer {
+	height: 35px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.share {
+	opacity: 40%;
+}
+
+.share:hover {
+	opacity: 80%;
+}
+
+.red {
+	color: red;
 }
 
 @keyframes pop {
