@@ -5,13 +5,13 @@
 	import { boardSize } from '$lib/ts/global_defaults';
 	import {
 		createEmptyBoard,
-		slider,
+		performSlide,
 		transposeBoard,
 		transposeBoardBack,
 		hasEmptyFields,
-		movementIsPossible,
-		movementIsPossibleInAnyDirection,
-		tileChecker
+		checkAvailableMoves,
+		checkAvailableMovesInAnyDirection,
+		determineTileColor
 	} from '$lib/ts/functions';
 
 	let score: number;
@@ -79,35 +79,27 @@
 	}
 
 	function handleGameTurn({ direction }: Directions) {
-		if (gameOver || !movementIsPossible(board, { direction: direction })) return;
+		if (gameOver || !checkAvailableMoves(board, { direction: direction })) return;
 
 		newTiles = [];
 
-		let brd1: Board = transposeBoard(board, { direction });
-		let afterSlide = slider(brd1);
-		brd1 = transposeBoardBack(afterSlide.brd, { direction });
-		board = [...brd1];
+		let transposedBoard: Board = transposeBoard(board, { direction });
+		let afterSlide = performSlide(transposedBoard);
+		transposedBoard = transposeBoardBack(afterSlide.board, { direction });
+		board = [...transposedBoard];
 		score += afterSlide.score;
 		addNewSquare();
-		if (!hasEmptyFields(board)) {
-			gameOverCheck();
-			return;
-		}
-	}
 
-	function gameOverCheck() {
-		if (movementIsPossibleInAnyDirection(board)) {
-			gameOver = false;
-		} else {
-			gameOver = true;
+		if (!hasEmptyFields(board)) {
+			gameOver = !checkAvailableMovesInAnyDirection(board);
 		}
 	}
 
 	// for testing visuals:
 
-	// function toggleGameOver() {
-	// 	return (gameOver = !gameOver);
-	// }
+	//function toggleGameOver() {
+	//	return (gameOver = !gameOver);
+	//}
 </script>
 
 <svelte:head>
@@ -118,7 +110,6 @@
 <body>
 	<section class="top-section">
 		<h1>2048</h1>
-		<!-- <button on:click={toggleGameOver}>G.O.</button> -->
 		{#if gameOver === true}
 			<h1 class="red">GAME OVER</h1>
 		{:else}
@@ -136,10 +127,10 @@
 					{#each row as tile, tileIndex}
 						<div
 							class={tile > 4096
-								? tileChecker(newTiles, rowIndex, tileIndex)
+								? determineTileColor(newTiles, rowIndex, tileIndex)
 									? 'tile x4096' + ' newtile'
 									: 'tile x4096'
-								: tileChecker(newTiles, rowIndex, tileIndex)
+								: determineTileColor(newTiles, rowIndex, tileIndex)
 									? 'tile x' + tile + ' newtile'
 									: 'tile x' + tile}
 						>
@@ -160,7 +151,9 @@
 	</section>
 
 	<section class="footer">
-		<a href="https://github.com/sozhran/2048" target="_blank">
+		<!-- for testing visuals -->
+		<!--<button on:click={toggleGameOver}>G.O.</button>-->
+		<a href="https://github.com/sozhran/2048-svelte" target="_blank">
 			<img
 				alt="github share icon"
 				src="https://i.imgur.com/5Qr1cEC.png"

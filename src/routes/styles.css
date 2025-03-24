@@ -128,7 +128,7 @@ button:disabled {
 .footer {
 	height: 35px;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
